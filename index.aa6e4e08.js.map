@@ -1,0 +1,1 @@
+{"mappings":"AAAgBA,SAASC,cAAc","sources":["src/index.js"],"sourcesContent":["const catInfo = document.querySelector('.cat-info');\n"],"names":["document","querySelector"],"version":3,"file":"index.aa6e4e08.js.map"}
