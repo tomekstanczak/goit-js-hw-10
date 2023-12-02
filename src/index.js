@@ -7,6 +7,8 @@ axios.defaults.baseURL = 'https://api.thecatapi.com/v1';
 const catInfo = document.querySelector('.cat-info');
 const breeds = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
+const errorMsg = document.querySelector('.error');
+
 function fetchBreeds() {
   return axios.get('/breeds').then(response => {
     return response.data;
@@ -30,7 +32,9 @@ breeds.addEventListener('change', ev => {
   const breed = ev.target.value;
   fetchCatByBreed(breed).then(cats => {
     loader.innerHTML = cats.map(
-      cat => `<h2>Cat ID: ${cat.id}</h2><img src="${cat.url}"></img>`
+      cat =>
+        `<h2>Cat ID: ${cat.id}</h2><img width="600" height="400" src="${cat.url}"></img>`
     );
+    errorMsg.innerHTML = `<p>I już jest!</p>`;
   });
 });
