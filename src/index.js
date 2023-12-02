@@ -32,9 +32,8 @@ breeds.addEventListener('change', ev => {
   const breed = ev.target.value;
   fetchCatByBreed(breed).then(cats => {
     loader.innerHTML = cats.map(
-      cat =>
-        `<h2>Cat ID: ${cat.id}</h2><img width="600" height="400" src="${cat.url}"></img>`
+      cat => `<img width="600" height="400" src="${cat.url}"></img>`
     );
-    errorMsg.innerHTML = `<p>I już jest!</p>`;
+    errorMsg.innerHTML = `<h2>${cats[0].breeds[0].name}</h2><p>${cats[0].breeds[0].description}</p>`;
   });
 });
