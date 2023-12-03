@@ -19,5 +19,18 @@
 }
 
 body {
-  background-color: silver;
+  background-color: lightgoldenrodyellow;
+}
+
+.cat-img {
+  max-width: 400px;
+  max-height: 400px;
+}
+.content {
+  margin-top: 40px;
+  display: flex;
+  gap: 30px;
+}
+.text-content {
+  width: 400px;
 }

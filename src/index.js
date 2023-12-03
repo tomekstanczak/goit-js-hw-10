@@ -1,5 +1,5 @@
 import axios from 'axios';
-import catFromId from './js/cat-api';
+import { catFromId } from './js/cat-api';
 import Notiflix from 'notiflix';
 
 axios.defaults.headers.common['x-api-key'] =
@@ -19,8 +19,9 @@ function fetchBreeds() {
       return response.data;
     })
     .catch(error => {
-      Notiflix.Report.failure('Error', errorMsg.textContent);
       hidenLoader();
+      errorMsg.style.display = 'block';
+      Notiflix.Report.failure('Error', errorMsg.textContent);
     });
 }
 // Loader function
@@ -31,12 +32,12 @@ function hidenLoader() {
   loader.style.display = 'none';
 }
 const show = function showLoader() {
-  console.log('Show function called');
-  loader.style.display = 'inline';
-  loader.innerHTML = `<span class="loader"></span>`;
+  loader.innerText = '';
+  loader.style.display = 'block';
 };
 
 //adding options off selector
+
 fetchBreeds().then(data => {
   const html = data.map(
     breed => `<option value="${breed.id}">${breed.name}</option>`
@@ -52,7 +53,7 @@ breeds.addEventListener('change', ev => {
 
   catFromId(breed).then(cats => {
     catInfo.style.display = 'block';
-    catInfo.innerHTML = `<img width="600" height="400" src="${cats[0].url}" class="cat-img"></img><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class=""description">${cats[0].breeds[0].description}</p>`;
+    catInfo.innerHTML = `<div class="content"><img src="${cats[0].url}" class="cat-img"></img><div class="text-content"><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class=""description">${cats[0].breeds[0].description}</p> <p>Temperament: ${cats[0].breeds[0].temperament}</p></div></div>`;
     hidenLoader();
     errorMsg.style.display = 'none';
   });
