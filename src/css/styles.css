@@ -19,12 +19,24 @@
 }
 
 body {
-  background-color: lightgoldenrodyellow;
+  background: linear-gradient(90deg, rgb(5, 66, 28), #000000);
+  max-width: 1400px;
+  display: block;
+  margin: auto;
 }
-
+.breed-select {
+  max-width: 1000px;
+  padding: 10px 15px 10px 15px;
+  margin: 30px 30px 0px 30px;
+  border: 2px solid black;
+  box-shadow: 5px 0 10px rgba(248, 248, 248, 0.3);
+  font-style: normal;
+}
 .cat-img {
   max-width: 400px;
   max-height: 400px;
+  border: 3px solid black;
+  box-shadow: 5px 0 10px rgba(248, 248, 248, 0.3);
 }
 .content {
   margin-top: 40px;
@@ -33,4 +45,11 @@ body {
 }
 .text-content {
   width: 400px;
+  border: 2px solid black;
+  padding: 30px;
+  background: linear-gradient(90deg, rgb(5, 66, 28), #000000);
+  color: black;
+  transition: background 0.3s ease;
+  box-shadow: inset 5px 5px 10px rgba(248, 248, 248, 0.3);
+  color: white;
 }

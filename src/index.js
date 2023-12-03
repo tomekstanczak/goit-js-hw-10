@@ -53,7 +53,7 @@ breeds.addEventListener('change', ev => {
 
   catFromId(breed).then(cats => {
     catInfo.style.display = 'block';
-    catInfo.innerHTML = `<div class="content"><img src="${cats[0].url}" class="cat-img"></img><div class="text-content"><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class=""description">${cats[0].breeds[0].description}</p> <p>Temperament: ${cats[0].breeds[0].temperament}</p></div></div>`;
+    catInfo.innerHTML = `<div class="content"><img src="${cats[0].url}" class="cat-img"></img><div class="text-content"><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class="description">${cats[0].breeds[0].description}</p> <p><b>Temperament: </b>${cats[0].breeds[0].temperament}.</p></div></div>`;
     hidenLoader();
     errorMsg.style.display = 'none';
   });
