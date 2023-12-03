@@ -1,4 +1,5 @@
 import axios from 'axios';
+import catFromId from './js/cat-api';
 
 axios.defaults.headers.common['x-api-key'] =
   'live_iSxpNY0J1wpUWrzEgbVQIM9euiUJCRkeaIGsnUnc6Ftz2d2845tTYt5pYnp02qHD';
@@ -15,12 +16,6 @@ function fetchBreeds() {
   });
 }
 
-function fetchCatByBreed(breedId) {
-  return axios.get(`/images/search?breed_ids=${breedId}`).then(response => {
-    return response.data;
-  });
-}
-
 fetchBreeds().then(data => {
   const html = data.map(
     breed => `<option value="${breed.id}">${breed.name}</option>`
@@ -28,9 +23,18 @@ fetchBreeds().then(data => {
   breeds.innerHTML = html;
 });
 
+const promise = new Promise((resolve, reject) => {
+  const shouldResolve = Math.random() > 0.3;
+  if (shouldResolve) {
+    resolve();
+  } else {
+    reject();
+  }
+});
+
 breeds.addEventListener('change', ev => {
   const breed = ev.target.value;
-  fetchCatByBreed(breed).then(cats => {
+  catFromId(breed).then(cats => {
     loader.innerHTML = cats.map(
       cat => `<img width="600" height="400" src="${cat.url}"></img>`
     );
