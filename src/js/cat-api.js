@@ -1,5 +1,5 @@
-export function fetchCatByBreed(breedId) {
+export const catFromId = () => {
   return axios.get(`/images/search?breed_ids=${breedId}`).then(response => {
-    return (catFromId = response.data);
+    return response.data;
   });
-}
+};
