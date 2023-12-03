@@ -44,12 +44,10 @@ breeds.addEventListener('change', ev => {
   const breed = ev.target.value;
   getChances(breed)
     .then(cats => {
-      loader.innerHTML = cats.map(
-        cat => `<img width="600" height="400" src="${cat.url}"></img>`
-      );
-      errorMsg.innerHTML = `<h2>${cats[0].breeds[0].name}</h2><p>${cats[0].breeds[0].description}</p>`;
+      loader.innerHTML = `<img width="600" height="400" src="${cats[0].url}" class="cat-img"></img><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class=""description">${cats[0].breeds[0].description}</p>`;
+      errorMsg.innerHTML = `<div></div>`;
     })
     .catch(error => {
-      errorMsg.insertAdjacentHTML('beforeend', '<p>Error</p>');
+      errorMsg.innerHTML = '<p>Error</p>';
     });
 });
