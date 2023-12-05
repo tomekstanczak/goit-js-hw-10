@@ -14,6 +14,10 @@ const errorMsg = document.querySelector('.error');
 // Loader function
 hidenLoader();
 errorMsg.style.display = 'none';
+breeds.style.display = 'none';
+catInfo.insertAdjacentHTML('afterend', '<p class="finally-Msg"></p>');
+
+const finallyMsg = document.querySelector('.finally-Msg');
 
 function hidenLoader() {
   loader.style.display = 'none';
@@ -31,6 +35,7 @@ fetchBreeds()
       breed => `<option value="${breed.id}">${breed.name}</option>`
     );
     breeds.innerHTML = html;
+    breeds.style.display = 'block';
   })
   .catch(error => {
     hidenLoader();
@@ -45,7 +50,8 @@ fetchBreeds()
 breeds.addEventListener('change', ev => {
   catInfo.style.display = 'none';
   show();
-
+  finallyMsg.classList.remove('text-content');
+  finallyMsg.innerText = '';
   const breed = ev.target.value;
 
   fetchCatByBreed(breed)
@@ -65,5 +71,27 @@ breeds.addEventListener('change', ev => {
     })
     .finally(() => {
       console.log('fetchCatByBreed has ended');
+    });
+
+  fetchCatByBreed(breed)
+    .then(response => {
+      return response.data;
+    })
+    .then(cats => {
+      catInfo.style.display = 'block';
+      catInfo.innerHTML = `<div class="content"><img src="${cats[0].url}" class="cat-img"></img><div class="text-content"><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class="description">${cats[0].breeds[0].description}</p> <p><b>Temperament: </b>${cats[0].breeds[0].temperament}.</p></div></div>`;
+      hidenLoader();
+      errorMsg.style.display = 'none';
+    })
+    .catch(error => {
+      hidenLoader();
+      errorMsg.style.display = 'block';
+      Notiflix.Report.failure('Error', errorMsg.textContent);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        finallyMsg.classList.add('text-content');
+        finallyMsg.innerText = 'Check another one and pick your favorite cat.';
+      }, 1000);
     });
 });
