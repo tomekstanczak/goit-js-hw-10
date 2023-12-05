@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { fetchCatByBreed, fetchBreeds } from './js/cat-api';
+import Notiflix from 'notiflix';
 
 axios.defaults.headers.common['x-api-key'] =
   'live_iSxpNY0J1wpUWrzEgbVQIM9euiUJCRkeaIGsnUnc6Ftz2d2845tTYt5pYnp02qHD';
@@ -9,6 +10,7 @@ const catInfo = document.querySelector('.cat-info');
 const breeds = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
 const errorMsg = document.querySelector('.error');
+breeds.setAttribute('id', 'selectElement');
 
 // Loader function
 hidenLoader();
@@ -24,12 +26,18 @@ const show = function showLoader() {
 
 //adding options off selector
 
-fetchBreeds().then(data => {
-  const html = data.map(
-    breed => `<option value="${breed.id}">${breed.name}</option>`
-  );
-  breeds.innerHTML = html;
-});
+fetchBreeds()
+  .then(data => {
+    const html = data.map(
+      breed => `<option value="${breed.id}">${breed.name}</option>`
+    );
+    breeds.innerHTML = html;
+  })
+  .catch(error => {
+    hidenLoader();
+    errorMsg.style.display = 'block';
+    Notiflix.Report.failure('Error', errorMsg.textContent);
+  });
 
 //adding resault in html code
 breeds.addEventListener('change', ev => {
@@ -37,10 +45,16 @@ breeds.addEventListener('change', ev => {
   show();
   const breed = ev.target.value;
 
-  fetchCatByBreed(breed).then(cats => {
-    catInfo.style.display = 'block';
-    catInfo.innerHTML = `<div class="content"><img src="${cats[0].url}" class="cat-img"></img><div class="text-content"><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class="description">${cats[0].breeds[0].description}</p> <p><b>Temperament: </b>${cats[0].breeds[0].temperament}.</p></div></div>`;
-    hidenLoader();
-    errorMsg.style.display = 'none';
-  });
+  fetchCatByBreed(breed)
+    .then(cats => {
+      catInfo.style.display = 'block';
+      catInfo.innerHTML = `<div class="content"><img src="${cats[0].url}" class="cat-img"></img><div class="text-content"><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class="description">${cats[0].breeds[0].description}</p> <p><b>Temperament: </b>${cats[0].breeds[0].temperament}.</p></div></div>`;
+      hidenLoader();
+      errorMsg.style.display = 'none';
+    })
+    .catch(error => {
+      hidenLoader();
+      errorMsg.style.display = 'block';
+      Notiflix.Report.failure('Error', errorMsg.textContent);
+    });
 });
