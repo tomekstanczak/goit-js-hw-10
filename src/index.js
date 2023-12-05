@@ -10,7 +10,6 @@ const catInfo = document.querySelector('.cat-info');
 const breeds = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
 const errorMsg = document.querySelector('.error');
-breeds.setAttribute('id', 'selectElement');
 
 // Loader function
 hidenLoader();
@@ -37,12 +36,16 @@ fetchBreeds()
     hidenLoader();
     errorMsg.style.display = 'block';
     Notiflix.Report.failure('Error', errorMsg.textContent);
+  })
+  .finally(() => {
+    console.log('fetchBreeds has ended');
   });
 
 //adding resault in html code
 breeds.addEventListener('change', ev => {
   catInfo.style.display = 'none';
   show();
+
   const breed = ev.target.value;
 
   fetchCatByBreed(breed)
@@ -59,5 +62,8 @@ breeds.addEventListener('change', ev => {
       hidenLoader();
       errorMsg.style.display = 'block';
       Notiflix.Report.failure('Error', errorMsg.textContent);
+    })
+    .finally(() => {
+      console.log('fetchCatByBreed has ended');
     });
 });
