@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 export const fetchCatByBreed = breedId => {
-  return axios.get(`/images/search?breed_ids=${breedId}`).then(response => {
-    return response.data;
-  });
+  return axios.get(`/images/search?breed_ids=${breedId}`);
 };
 //fetch implementation
 export const fetchBreeds = () => {
