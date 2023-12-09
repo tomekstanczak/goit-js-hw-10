@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { fetchCatByBreed, fetchBreeds } from './js/cat-api';
 import Notiflix from 'notiflix';
+import SlimSelect from 'slim-select';
 
 axios.defaults.headers.common['x-api-key'] =
   'live_iSxpNY0J1wpUWrzEgbVQIM9euiUJCRkeaIGsnUnc6Ftz2d2845tTYt5pYnp02qHD';
@@ -10,6 +11,15 @@ const catInfo = document.querySelector('.cat-info');
 const breeds = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
 const errorMsg = document.querySelector('.error');
+
+breeds.setAttribute('id', 'single');
+
+new SlimSelect({
+  select: '#single',
+  settings: {
+    placeholderText: 'Choose cat',
+  },
+});
 
 // Loader function
 hidenLoader();
