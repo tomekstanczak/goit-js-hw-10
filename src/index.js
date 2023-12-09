@@ -14,13 +14,6 @@ const errorMsg = document.querySelector('.error');
 
 breeds.setAttribute('id', 'single');
 
-new SlimSelect({
-  select: '#single',
-  settings: {
-    placeholderText: 'Choose cat',
-  },
-});
-
 // Loader function
 hidenLoader();
 errorMsg.style.display = 'none';
@@ -46,6 +39,12 @@ fetchBreeds()
     );
     breeds.innerHTML = html;
     breeds.style.display = 'block';
+    new SlimSelect({
+      select: '#single',
+      settings: {
+        placeholderText: 'Choose cat',
+      },
+    });
   })
   .catch(error => {
     hidenLoader();
