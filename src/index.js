@@ -12,13 +12,14 @@ const catInfo = document.querySelector('.cat-info');
 const breeds = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
 const errorMsg = document.querySelector('.error');
+const selectShow = document.querySelector('.select-show');
 
 breeds.setAttribute('id', 'single');
 
 // Loader function
 hidenLoader();
 errorMsg.style.display = 'none';
-
+selectShow.style.display = 'none';
 catInfo.insertAdjacentHTML('afterend', '<p class="finally-Msg"></p>');
 
 const finallyMsg = document.querySelector('.finally-Msg');
@@ -39,7 +40,7 @@ fetchBreeds()
       breed => `<option value="${breed.id}">${breed.name}</option>`
     );
     breeds.innerHTML = html;
-
+    selectShow.style.display = 'block';
     new SlimSelect({
       select: '#single',
       settings: {
@@ -59,6 +60,7 @@ fetchBreeds()
 //adding resault in html code
 breeds.addEventListener('change', ev => {
   catInfo.style.display = 'none';
+  selectShow.style.display = 'block';
   show();
   finallyMsg.classList.remove('text-content');
   finallyMsg.innerText = '';
