@@ -2,6 +2,7 @@ import axios from 'axios';
 import { fetchCatByBreed, fetchBreeds } from './js/cat-api';
 import Notiflix from 'notiflix';
 import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
 
 axios.defaults.headers.common['x-api-key'] =
   'live_iSxpNY0J1wpUWrzEgbVQIM9euiUJCRkeaIGsnUnc6Ftz2d2845tTYt5pYnp02qHD';
@@ -17,7 +18,7 @@ breeds.setAttribute('id', 'single');
 // Loader function
 hidenLoader();
 errorMsg.style.display = 'none';
-breeds.style.display = 'none';
+
 catInfo.insertAdjacentHTML('afterend', '<p class="finally-Msg"></p>');
 
 const finallyMsg = document.querySelector('.finally-Msg');
@@ -38,7 +39,7 @@ fetchBreeds()
       breed => `<option value="${breed.id}">${breed.name}</option>`
     );
     breeds.innerHTML = html;
-    breeds.style.display = 'block';
+
     new SlimSelect({
       select: '#single',
       settings: {
@@ -62,25 +63,6 @@ breeds.addEventListener('change', ev => {
   finallyMsg.classList.remove('text-content');
   finallyMsg.innerText = '';
   const breed = ev.target.value;
-
-  fetchCatByBreed(breed)
-    .then(response => {
-      return response.data;
-    })
-    .then(cats => {
-      catInfo.style.display = 'block';
-      catInfo.innerHTML = `<div class="content"><img src="${cats[0].url}" class="cat-img"></img><div class="text-content"><h2 class="cat-name">${cats[0].breeds[0].name}</h2><p class="description">${cats[0].breeds[0].description}</p> <p><b>Temperament: </b>${cats[0].breeds[0].temperament}.</p></div></div>`;
-      hidenLoader();
-      errorMsg.style.display = 'none';
-    })
-    .catch(error => {
-      hidenLoader();
-      errorMsg.style.display = 'block';
-      Notiflix.Report.failure('Error', errorMsg.textContent);
-    })
-    .finally(() => {
-      console.log('fetchCatByBreed has ended');
-    });
 
   fetchCatByBreed(breed)
     .then(response => {
